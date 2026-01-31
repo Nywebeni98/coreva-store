@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-primary py-16 md:py-24">
+    <section className="relative overflow-hidden bg-primary pt-20 pb-16 md:pt-24 md:pb-24">
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/80" />
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-secondary blur-3xl" />
