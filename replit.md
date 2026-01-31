@@ -1,81 +1,60 @@
-# Coreva Store
+# Coreva Store - Online Perfume Shop
 
 ## Overview
+Coreva Store is an online e-commerce store specializing in premium fragrances. The store features a modern, elegant design with colors inspired by the brand logo (dark navy blue, orange, and light blue).
 
-Coreva Store is an e-commerce web application for premium fragrances and perfumes. The platform allows customers to browse a collection of products, add items to a shopping cart, and manage their cart contents. The application features a responsive design with a modern UI built using React and shadcn/ui components.
+## Current Features
+- Product catalog displaying perfumes for men and women
+- Shopping cart with session-based persistence
+- Add to cart, update quantity, and remove items functionality
+- Responsive design for all screen sizes
+- Prices displayed in South African Rand (ZAR)
 
-## User Preferences
+## Products
+1. **Bleu Ultra** - R350.00 - Masculine fragrance with citrus, cedar, and musk notes
+2. **Good Luck** - R150.00 - Feminine fragrance with rose, jasmine, and vanilla notes
 
-Preferred communication style: Simple, everyday language.
+## Tech Stack
+- **Frontend**: React with TypeScript, TanStack Query, Wouter router
+- **Backend**: Express.js with TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **Styling**: Tailwind CSS with custom theme colors
 
-## System Architecture
+## Project Structure
+```
+client/src/
+├── components/       # Reusable UI components
+│   ├── header.tsx   # Store header with logo and cart
+│   ├── hero.tsx     # Hero section banner
+│   ├── product-card.tsx  # Product display cards
+│   └── cart-sheet.tsx    # Shopping cart drawer
+├── lib/
+│   └── cart-context.tsx  # Cart state management
+├── pages/
+│   └── home.tsx     # Main store page
+└── App.tsx          # App entry point
 
-### Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **Routing**: Wouter (lightweight React router)
-- **State Management**: TanStack React Query for server state, React Context for cart state
-- **UI Components**: shadcn/ui component library built on Radix UI primitives
-- **Styling**: Tailwind CSS with CSS variables for theming
-- **Build Tool**: Vite for development and production builds
+server/
+├── db.ts            # Database connection
+├── routes.ts        # API endpoints
+├── storage.ts       # Data access layer
+├── seed.ts          # Initial product data
+└── index.ts         # Server entry point
 
-The frontend follows a component-based architecture with:
-- Pages in `client/src/pages/` (home, not-found)
-- Reusable components in `client/src/components/`
-- UI primitives in `client/src/components/ui/`
-- Custom hooks in `client/src/hooks/`
-- Shared utilities and context in `client/src/lib/`
+shared/
+└── schema.ts        # Database schemas and types
+```
 
-### Backend Architecture
-- **Runtime**: Node.js with Express 5
-- **Language**: TypeScript with ESM modules
-- **API Pattern**: RESTful JSON APIs under `/api/*` prefix
-- **Build**: esbuild for server bundling, Vite for client
+## API Endpoints
+- `GET /api/products` - Get all products
+- `GET /api/products/:id` - Get single product
+- `GET /api/cart?sessionId=` - Get cart items for session
+- `POST /api/cart` - Add item to cart
+- `PATCH /api/cart/:id` - Update cart item quantity
+- `DELETE /api/cart/:id` - Remove item from cart
+- `DELETE /api/cart/clear?sessionId=` - Clear entire cart
 
-The server handles:
-- Product catalog endpoints (`/api/products`)
-- Shopping cart operations (`/api/cart`)
-- Static file serving in production
-- Vite dev server middleware in development
-
-### Data Storage
-- **Database**: PostgreSQL via `pg` driver
-- **ORM**: Drizzle ORM with Drizzle Kit for migrations
-- **Schema Location**: `shared/schema.ts` contains all table definitions
-- **Schema Validation**: Zod schemas generated from Drizzle schemas via `drizzle-zod`
-
-Database tables:
-- `users` - User accounts (id, username, password)
-- `products` - Product catalog (id, name, description, price, image, category, gender)
-- `cart_items` - Shopping cart items (id, sessionId, productId, quantity)
-
-### Session Management
-- Cart identification uses client-side UUID stored in localStorage
-- No user authentication currently implemented
-- Session ID passed as query parameter to cart endpoints
-
-### Path Aliases
-- `@/*` → `client/src/*`
-- `@shared/*` → `shared/*`
-- `@assets/*` → `attached_assets/*`
-
-## External Dependencies
-
-### Database
-- **PostgreSQL**: Required database connection via `DATABASE_URL` environment variable
-- **Drizzle Kit**: Schema push with `npm run db:push`
-
-### UI Framework
-- **Radix UI**: Full suite of accessible primitives for dialogs, dropdowns, tooltips, etc.
-- **Tailwind CSS**: Utility-first CSS with custom theme configuration
-- **Lucide React**: Icon library
-
-### Core Libraries
-- **TanStack React Query**: Data fetching and caching
-- **Zod**: Runtime type validation
-- **class-variance-authority**: Component variant management
-- **date-fns**: Date formatting utilities
-
-### Development Tools
-- **Vite**: Development server with HMR
-- **TSX**: TypeScript execution for Node.js
-- **Replit Plugins**: Runtime error overlay, cartographer, dev banner (Replit environment only)
+## Theme Colors
+- **Primary**: Dark navy blue (#1a2f4a)
+- **Secondary**: Orange (#f5a623)
+- **Accent**: Light blue (#3bb8e0)
