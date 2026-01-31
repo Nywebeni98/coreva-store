@@ -14,35 +14,28 @@ export function Header({ onCartClick }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container px-4 md:px-6">
-        <div className="flex items-center justify-between h-14">
-          <nav className="hidden md:flex items-center gap-6">
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer" data-testid="link-shop">
-              Shop
-            </span>
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer" data-testid="link-fragrances">
-              Fragrances
-            </span>
-          </nav>
-
-          <div className="flex-1 md:hidden" />
-
-          <div className="absolute left-1/2 -translate-x-1/2 top-2">
-            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-4 border-secondary bg-white shadow-lg flex items-center justify-center overflow-hidden">
-              <img
-                src={logoImage}
-                alt="Coreva Store"
-                className="w-20 h-20 md:w-24 md:h-24 object-contain"
-                data-testid="img-logo"
-              />
-            </div>
+        <div className="flex items-center justify-between h-20 gap-4">
+          <div className="flex items-center gap-3">
+            <img
+              src={logoImage}
+              alt="Coreva Store"
+              className="h-16 md:h-20 w-auto object-contain"
+              data-testid="img-logo"
+            />
           </div>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer" data-testid="link-about">
+          <nav className="hidden md:flex items-center gap-8">
+            <span className="text-sm font-semibold uppercase tracking-wide text-foreground hover:text-secondary transition-colors cursor-pointer" data-testid="link-home">
+              Home
+            </span>
+            <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground hover:text-secondary transition-colors cursor-pointer" data-testid="link-about">
               About
             </span>
-            <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer" data-testid="link-contact">
-              Contact
+            <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground hover:text-secondary transition-colors cursor-pointer" data-testid="link-shop">
+              Shop
+            </span>
+            <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground hover:text-secondary transition-colors cursor-pointer" data-testid="link-contact">
+              Contact Us
             </span>
           </nav>
 
