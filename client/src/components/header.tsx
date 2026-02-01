@@ -2,7 +2,7 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/lib/cart-context";
-import logoImage from "@assets/WhatsApp_Image_2026-01-31_at_20.45.39_1769885183541.jpeg";
+import logoImage from "@assets/COREVA-removebg-preview_(1)_1769981866385.png";
 
 interface HeaderProps {
   onCartClick: () => void;
