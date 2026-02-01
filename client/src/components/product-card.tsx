@@ -33,30 +33,30 @@ export function ProductCard({ product }: ProductCardProps) {
           data-testid={`img-product-${product.id}`}
         />
       </div>
-      <CardContent className="p-4 space-y-3 bg-[#2B2E34] text-white rounded-b-md">
-        <h3 className="font-semibold text-base leading-tight line-clamp-2" data-testid={`text-name-${product.id}`}>
+      <CardContent className="p-3 space-y-2 bg-[#2B2E34] text-white rounded-b-md">
+        <h3 className="font-medium text-xs leading-tight line-clamp-2" data-testid={`text-name-${product.id}`}>
           {product.name}
         </h3>
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xl font-bold text-[#F5A623]" data-testid={`text-price-${product.id}`}>
+          <span className="text-sm font-bold text-[#F5A623]" data-testid={`text-price-${product.id}`}>
             {formatPrice(product.price)}
           </span>
           <Button
             onClick={handleAddToCart}
             disabled={isLoading}
             size="sm"
-            className="bg-white text-[#1F4D88] border-2 border-[#1F4D88] hover:bg-white/90 rounded-full px-4"
+            className="bg-white text-[#1F4D88] border border-[#1F4D88] hover:bg-white/90 rounded-none text-xs px-2 h-7"
             data-testid={`button-add-cart-${product.id}`}
           >
             {added ? (
               <>
-                <Check className="h-4 w-4 mr-1" />
+                <Check className="h-3 w-3 mr-1" />
                 Added
               </>
             ) : (
               <>
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                Add to Cart
+                <ShoppingCart className="h-3 w-3 mr-1" />
+                Add
               </>
             )}
           </Button>
