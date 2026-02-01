@@ -15,6 +15,9 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
+  const menProducts = products?.filter(p => p.gender === "male") || [];
+  const womenProducts = products?.filter(p => p.gender === "female") || [];
+
   return (
     <div className="min-h-screen bg-background">
       <Header onCartClick={() => setCartOpen(true)} />
@@ -49,16 +52,42 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          ) : products && products.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" data-testid="grid-products">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No products available yet.</p>
-            </div>
+            <>
+              {menProducts.length > 0 && (
+                <div className="mb-16">
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">For Him</h3>
+                    <p className="text-muted-foreground mt-2">Masculine fragrances for the modern gentleman</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" data-testid="grid-men-products">
+                    {menProducts.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {womenProducts.length > 0 && (
+                <div>
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">For Her</h3>
+                    <p className="text-muted-foreground mt-2">Perfumes</p>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-testid="grid-women-products">
+                    {womenProducts.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {menProducts.length === 0 && womenProducts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No products available yet.</p>
+                </div>
+              )}
+            </>
           )}
         </section>
 
