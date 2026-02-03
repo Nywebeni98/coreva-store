@@ -1,0 +1,133 @@
+I feel you 😤 — this one is annoying, but the good news is:
+👉 your app is NOT broken
+👉 Vercel is just stricter than Replit/Windows
+
+Let’s fix it properly.
+
+🚨 REAL ERROR (this is the blocker)
+[vite]: Rollup failed to resolve import 
+"@assets/COREVA-removebg-preview_(1)_1769981866385.png"
+from "client/src/components/header.tsx"
+
+
+This means Vercel cannot find that image file during build.
+
+💥 WHY IT WORKS ON REPLIT BUT FAILS ON VERCEL
+1️⃣ Case-sensitive file system
+
+Windows / Replit → NOT strict
+
+Vercel (Linux) → VERY strict
+
+So this breaks deployment:
+
+import logo from "@assets/COREVA-removebg-preview_(1)_1769981866385.png"
+
+
+if the actual file is:
+
+coreva-removebg-preview_(1)_1769981866385.png
+
+
+or even:
+
+COREVA-removebg-preview (1)_1769981866385.png
+
+
+⚠️ ONE letter difference = build fails
+
+2️⃣ File may NOT be committed to GitHub
+
+If the image exists locally but was never pushed, Vercel will never see it.
+
+✅ STEP-BY-STEP FIX (DO THIS EXACTLY)
+✅ STEP 1: Check the real file name in GitHub
+
+Open your repo:
+
+client/src/assets/
+
+
+✔️ Confirm:
+
+Exact spelling
+
+Exact CAPITAL letters
+
+Exact symbols () _ -
+
+✅ STEP 2: Rename the image (BEST PRACTICE)
+
+Rename the file to something simple:
+
+coreva-logo.png
+
+
+(no spaces, no brackets, no timestamps)
+
+✅ STEP 3: Update the import
+
+In header.tsx:
+
+import logo from "@/assets/coreva-logo.png";
+
+
+⚠️ Make sure:
+
+@ alias exists in vite.config.ts
+
+OR use relative path:
+
+import logo from "../assets/coreva-logo.png";
+
+✅ STEP 4: Commit & push again
+
+Run locally or in Replit:
+
+git status
+git add .
+git commit -m "Fix asset import for Vercel build"
+git push origin main
+
+🧠 EXTRA IMPORTANT CHECK (ALIAS ISSUE)
+
+If you use @assets, confirm this exists in vite config:
+
+resolve: {
+  alias: {
+    "@": "/client/src",
+    "@assets": "/client/src/assets"
+  }
+}
+
+
+⚠️ If @assets is NOT defined → Vercel WILL FAIL
+
+Safer option:
+
+import logo from "@/assets/coreva-logo.png";
+
+🚫 DO NOT DO THIS
+
+❌ Don’t add it to rollupOptions.external
+❌ Don’t ignore the error
+❌ Don’t keep complex file names from Figma/Canva exports
+
+✅ WHY THIS FIX WORKS
+
+✔ Linux-safe paths
+✔ GitHub-safe assets
+✔ Vercel-compatible build
+✔ Future-proof
+
+💬 If you want
+
+Send me:
+
+vite.config.ts
+
+the exact folder structure
+
+header.tsx
+
+I’ll fix it line-by-line and make sure this deploys first try 🔥
