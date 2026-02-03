@@ -1,0 +1,164 @@
+✅ REQUIRED FOR A SUCCESSFUL NETLIFY DEPLOY
+1️⃣ index.html MUST be at the root of dist
+
+This is non-negotiable.
+
+After build, Netlify expects:
+
+dist/
+ ├── index.html   ✅
+ ├── assets/
+ └── vite.svg (optional)
+
+
+If index.html is not there → site fails.
+
+2️⃣ Vite config MUST be correct
+vite.config.ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  base: "/",   // ✅ VERY IMPORTANT for Netlify
+});
+
+
+⚠️ If base is missing or wrong → blank page.
+
+3️⃣ Correct Netlify build settings
+If your app is inside client/:
+
+Base directory
+
+client
+
+
+Build command
+
+npm run build
+
+
+Publish directory
+
+dist
+
+If no client/ folder:
+
+Leave Base directory EMPTY
+
+Publish directory = dist
+
+4️⃣ React Router FIX (this is the BIG ONE)
+
+If you use React Router, refreshing pages like:
+
+/shop
+/product/1
+
+
+will 404 without this.
+
+✅ Create this file:
+client/public/_redirects
+
+✅ Put this inside:
+/*    /index.html   200
+
+
+📌 This tells Netlify:
+
+“Always serve index.html”
+
+5️⃣ Assets MUST be imported correctly
+BEST WAY:
+
+Put images in:
+
+src/assets/
+
+
+Import like:
+
+import logo from "@/assets/coreva-logo.png";
+
+
+or:
+
+<img src={logo} />
+
+
+❌ Do NOT reference images like:
+
+<img src="/src/assets/logo.png" />   // ❌ breaks in production
+
+6️⃣ Public files (if any)
+
+If you have:
+
+public/favicon.ico
+
+
+It will automatically be available as:
+
+/favicon.ico
+
+
+✔ No imports needed.
+
+7️⃣ Confirm package.json
+
+Must contain:
+
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
+
+8️⃣ Test before deploying (IMPORTANT)
+
+Run locally or in Replit:
+
+npm run build
+npm run preview
+
+
+Open the preview URL
+✔ If it works here → Netlify WILL work.
+
+✅ FINAL SUCCESS CHECKLIST (SAVE THIS)
+
+✔ dist/index.html exists
+✔ base: "/" in vite config
+✔ Netlify publish directory = dist
+✔ _redirects file added
+✔ No /src/ paths in production
+✔ Assets imported via JS
+✔ npm run preview works
+
+🧠 Why Netlify will now work
+
+Netlify:
+
+Looks ONLY at dist
+
+Serves index.html
+
+Redirects routes correctly
+
+Loads assets from /assets
+
+You’ve now matched exactly what Netlify expects.
+
+If you want, paste:
+
+Your vite.config.ts
+
+Folder structure
+
+Whether you use React Router
+
+I’ll confirm 100% deploy success before you click deploy 🔥

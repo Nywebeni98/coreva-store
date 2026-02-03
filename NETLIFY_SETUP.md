@@ -13,8 +13,8 @@ Push this project to a GitHub repository (already done if you followed the Verce
 
 ### 3. Configure Build Settings
 Netlify should auto-detect the settings from `netlify.toml`, but verify:
-- **Build command**: `npm install && cd client && npm install && npx vite build --outDir ../dist`
-- **Publish directory**: `dist`
+- **Build command**: `npm install && cd client && npm install && cd .. && npm run build`
+- **Publish directory**: `dist/public`
 - **Functions directory**: `netlify/functions`
 
 ### 4. Set Environment Variables

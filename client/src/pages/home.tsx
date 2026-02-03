@@ -56,7 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-8 md:py-12">
+      <section>
         <PhotoCarousel />
       </section>
 
