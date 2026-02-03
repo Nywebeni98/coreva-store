@@ -56,10 +56,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-12 md:py-16">
-        <div className="container px-4 md:px-6">
-          <PhotoCarousel />
-        </div>
+      <section className="py-8 md:py-12">
+        <PhotoCarousel />
       </section>
 
       <section className="py-16 md:py-24 bg-muted/30">

@@ -19,19 +19,19 @@ export function PhotoCarousel() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-lg" data-testid="carousel-photos">
-      <div className="relative aspect-[16/9] md:aspect-[21/9]">
+    <div className="relative w-full overflow-hidden bg-muted/30" data-testid="carousel-photos">
+      <div className="relative h-[400px] md:h-[500px] lg:h-[600px]">
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
+            className={`absolute inset-0 transition-opacity duration-1000 flex items-center justify-center ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
           >
             <img
               src={image.src}
               alt={image.alt}
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-full object-contain"
             />
           </div>
         ))}
@@ -42,7 +42,7 @@ export function PhotoCarousel() {
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`w-2 h-2 rounded-full transition-all ${
-              index === currentIndex ? "bg-white w-6" : "bg-white/50"
+              index === currentIndex ? "bg-secondary w-6" : "bg-muted-foreground/50"
             }`}
             data-testid={`carousel-dot-${index}`}
           />
