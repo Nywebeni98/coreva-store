@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd client && npx vite build --outDir ../dist",
+  "buildCommand": "npx vite build --config vite.config.vercel.ts",
   "outputDirectory": "dist",
   "framework": null,
   "functions": {
