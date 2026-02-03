@@ -22,6 +22,7 @@ export const products = pgTable("products", {
   name: text("name").notNull(),
   description: text("description").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  scratchPrice: decimal("scratch_price", { precision: 10, scale: 2 }),
   image: text("image").notNull(),
   category: text("category").notNull(),
   gender: text("gender").notNull(),

@@ -1,157 +1,228 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Header } from "@/components/header";
-import { Hero } from "@/components/hero";
-import { ProductCard } from "@/components/product-card";
-import { CartSheet } from "@/components/cart-sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Separator } from "@/components/ui/separator";
-import type { Product } from "@shared/schema";
+import { Header } from "../components/header";
+import { CartSheet } from "../components/cart-sheet";
+import { PhotoCarousel } from "../components/photo-carousel";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { Separator } from "../components/ui/separator";
+import { Link } from "wouter";
+import { ArrowRight, ShoppingCart, Package, Truck, Tag, Star } from "lucide-react";
 
 export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
 
-  const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: ["/api/products"],
-  });
-
-  const menProducts = products?.filter(p => p.gender === "male") || [];
-  const womenProducts = products?.filter(p => p.gender === "female") || [];
-
   return (
     <div className="min-h-screen bg-background">
       <Header onCartClick={() => setCartOpen(true)} />
-      <Hero />
 
-      <main className="container px-4 md:px-6">
-        <section className="py-16 md:py-24">
-          <div className="text-center space-y-4 mb-12">
-            <p className="text-secondary font-semibold uppercase tracking-[0.2em] text-sm">
-              Exclusive Scents
+      <section className="relative overflow-hidden bg-primary">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/90" />
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-secondary blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-accent blur-3xl" />
+        </div>
+        
+        <div className="container relative px-4 md:px-6 py-20 md:py-28">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <p className="text-secondary font-semibold uppercase tracking-[0.3em] text-sm">
+              Smart Shopping
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight" data-testid="text-section-title">
-              Our Collection
+            
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground leading-tight" data-testid="text-hero-title">
+              Everything You Need.
+              <br />
+              <span className="text-secondary">One Combo. One Price.</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-subtitle">
+              Shop combo deals on cereals, perfumes, household essentials, pest control and more — all at unbeatable prices.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <Link href="/shop">
+                <Button size="lg" variant="secondary" className="gap-2 text-base px-8" data-testid="button-shop-combos">
+                  <ShoppingCart className="h-5 w-5" />
+                  Shop Combos
+                </Button>
+              </Link>
+              <Link href="/shop">
+                <Button size="lg" variant="outline" className="text-base px-8 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" data-testid="button-view-deals">
+                  View Deals
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+          <PhotoCarousel />
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container px-4 md:px-6">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight" data-testid="text-why-choose">
+              Why Choose Coreva Store?
             </h2>
             <Separator className="w-24 mx-auto bg-secondary h-1 rounded-full" />
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Hand-picked fragrances for every occasion. Each perfume is crafted with the finest ingredients to create an unforgettable experience.
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8 pb-6 px-6 space-y-4">
+                <div className="w-16 h-16 mx-auto rounded-full bg-secondary/10 flex items-center justify-center">
+                  <Tag className="h-8 w-8 text-secondary" />
+                </div>
+                <h3 className="font-bold text-xl">Discounted Combos</h3>
+                <p className="text-muted-foreground">
+                  Save more when you buy everyday items together.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8 pb-6 px-6 space-y-4">
+                <div className="w-16 h-16 mx-auto rounded-full bg-secondary/10 flex items-center justify-center">
+                  <Package className="h-8 w-8 text-secondary" />
+                </div>
+                <h3 className="font-bold text-xl">Everything in One Place</h3>
+                <p className="text-muted-foreground">
+                  Food, fragrance, and household essentials — no need to shop around.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8 pb-6 px-6 space-y-4">
+                <div className="w-16 h-16 mx-auto rounded-full bg-secondary/10 flex items-center justify-center">
+                  <Truck className="h-8 w-8 text-secondary" />
+                </div>
+                <h3 className="font-bold text-xl">Convenient Shopping</h3>
+                <p className="text-muted-foreground">
+                  Order online and get value delivered to you.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24">
+        <div className="container px-4 md:px-6">
+          <div className="text-center space-y-4 mb-12">
+            <p className="text-secondary font-semibold uppercase tracking-[0.2em] text-sm">
+              Best Sellers
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight" data-testid="text-featured-combos">
+              Popular Combo Deals
+            </h2>
+            <Separator className="w-24 mx-auto bg-secondary h-1 rounded-full" />
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Handpicked bundles designed to save you money on items you use every day.
             </p>
           </div>
 
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {[1, 2].map((i) => (
-                <div key={i} className="space-y-4">
-                  <Skeleton className="aspect-square rounded-lg" />
-                  <Skeleton className="h-6 w-3/4" />
-                  <Skeleton className="h-4 w-full" />
-                  <div className="flex justify-between">
-                    <Skeleton className="h-8 w-24" />
-                    <Skeleton className="h-10 w-36" />
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="overflow-hidden border-0 shadow-lg hover-elevate">
+              <div className="aspect-video relative overflow-hidden">
+                <img src="/assets/cereals-combo.jpeg" alt="Breakfast Combo" className="w-full h-full object-cover" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="font-bold text-lg mb-2">Breakfast Combo</h3>
+                <p className="text-muted-foreground text-sm">Cereals + essentials for the whole family</p>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-0 shadow-lg hover-elevate">
+              <div className="aspect-video relative overflow-hidden">
+                <img src="/assets/skincare-combo.jpeg" alt="Fresh & Fragrance Combo" className="w-full h-full object-cover" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="font-bold text-lg mb-2">Fresh & Fragrance Combo</h3>
+                <p className="text-muted-foreground text-sm">Perfumes at discounted prices</p>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-0 shadow-lg hover-elevate">
+              <div className="aspect-video relative overflow-hidden">
+                <img src="/assets/pest-control.jpeg" alt="Home Care Combo" className="w-full h-full object-cover" />
+              </div>
+              <CardContent className="p-6">
+                <h3 className="font-bold text-lg mb-2">Home Care Combo</h3>
+                <p className="text-muted-foreground text-sm">Cleaning & pest control essentials</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-20 bg-muted/30">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              We focus on value. No complicated pricing. Just smart deals on everyday products.
+            </p>
+            <div className="flex items-center justify-center gap-1">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} className="h-6 w-6 fill-secondary text-secondary" />
               ))}
             </div>
-          ) : (
-            <>
-              {menProducts.length > 0 && (
-                <div className="mb-16">
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">For Him</h3>
-                    <p className="text-muted-foreground mt-2">Masculine fragrances for the modern gentleman</p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" data-testid="grid-men-products">
-                    {menProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {womenProducts.length > 0 && (
-                <div>
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">For Her</h3>
-                    <p className="text-muted-foreground mt-2">Perfumes</p>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-testid="grid-women-products">
-                    {womenProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {menProducts.length === 0 && womenProducts.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">No products available yet.</p>
-                </div>
-              )}
-            </>
-          )}
-        </section>
-
-        <section className="py-16 border-t">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="space-y-3">
-              <div className="w-16 h-16 mx-auto rounded-full bg-secondary/10 flex items-center justify-center">
-                <span className="text-2xl font-bold text-secondary">01</span>
-              </div>
-              <h3 className="font-semibold text-lg">Premium Quality</h3>
-              <p className="text-muted-foreground text-sm">
-                Only the finest ingredients sourced from around the world
-              </p>
-            </div>
-            <div className="space-y-3">
-              <div className="w-16 h-16 mx-auto rounded-full bg-secondary/10 flex items-center justify-center">
-                <span className="text-2xl font-bold text-secondary">02</span>
-              </div>
-              <h3 className="font-semibold text-lg">Fast Delivery</h3>
-              <p className="text-muted-foreground text-sm">
-                Swift and secure delivery right to your doorstep
-              </p>
-            </div>
-            <div className="space-y-3">
-              <div className="w-16 h-16 mx-auto rounded-full bg-secondary/10 flex items-center justify-center">
-                <span className="text-2xl font-bold text-secondary">03</span>
-              </div>
-              <h3 className="font-semibold text-lg">Satisfaction Guaranteed</h3>
-              <p className="text-muted-foreground text-sm">
-                Love your fragrance or we'll make it right
-              </p>
-            </div>
+            <p className="text-sm text-muted-foreground">Trusted by customers who love saving</p>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <footer className="border-t bg-primary text-primary-foreground py-12">
+      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <div className="container px-4 md:px-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Ready to Save More?
+            </h2>
+            <p className="text-primary-foreground/80 text-lg">
+              Browse our combo deals and get more for less today.
+            </p>
+            <Link href="/shop">
+              <Button size="lg" variant="secondary" className="gap-2 text-base px-8" data-testid="button-shop-now-cta">
+                <ShoppingCart className="h-5 w-5" />
+                Shop Now
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t bg-background py-12">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4">
               <h4 className="font-bold text-lg">Coreva Store</h4>
-              <p className="text-primary-foreground/70 text-sm">
-                Premium fragrances for those who appreciate the finer things in life.
+              <p className="text-muted-foreground text-sm">
+                Your one-stop shop for everyday essentials at unbeatable prices.
               </p>
             </div>
             <div className="space-y-4">
               <h4 className="font-semibold">Quick Links</h4>
-              <div className="flex flex-col gap-2 text-sm text-primary-foreground/70">
-                <span className="hover:text-primary-foreground cursor-pointer">Home</span>
-                <span className="hover:text-primary-foreground cursor-pointer">About Us</span>
-                <span className="hover:text-primary-foreground cursor-pointer">Shop</span>
-                <span className="hover:text-primary-foreground cursor-pointer">Contact</span>
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                <Link href="/" className="hover:text-foreground cursor-pointer">Home</Link>
+                <Link href="/about" className="hover:text-foreground cursor-pointer">About Us</Link>
+                <Link href="/shop" className="hover:text-foreground cursor-pointer">Shop</Link>
+                <Link href="/contact" className="hover:text-foreground cursor-pointer">Contact</Link>
               </div>
             </div>
             <div className="space-y-4">
               <h4 className="font-semibold">Contact</h4>
-              <div className="flex flex-col gap-2 text-sm text-primary-foreground/70">
+              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
                 <span>South Africa</span>
                 <span>Prices in ZAR (R)</span>
               </div>
             </div>
           </div>
-          <Separator className="my-8 bg-primary-foreground/20" />
-          <p className="text-center text-sm text-primary-foreground/60">
+          <Separator className="my-8" />
+          <p className="text-center text-sm text-muted-foreground">
             Coreva Online Store. All rights reserved.
           </p>
         </div>

@@ -38,9 +38,16 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </h3>
         <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-bold text-[#F5A623]" data-testid={`text-price-${product.id}`}>
-            {formatPrice(product.price)}
-          </span>
+          <div className="flex flex-col">
+            {product.scratchPrice && (
+              <span className="text-xs text-gray-400 line-through" data-testid={`text-scratch-price-${product.id}`}>
+                {formatPrice(product.scratchPrice)}
+              </span>
+            )}
+            <span className="text-sm font-bold text-[#F5A623]" data-testid={`text-price-${product.id}`}>
+              {formatPrice(product.price)}
+            </span>
+          </div>
           <Button
             onClick={handleAddToCart}
             disabled={isLoading}

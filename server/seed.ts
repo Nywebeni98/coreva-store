@@ -5,20 +5,24 @@ export async function seedDatabase() {
   try {
     const existingProducts = await db.select().from(products);
     
-    // Check if we have the new women's products
-    const hasNewProducts = existingProducts.some(p => p.name.includes("Foschini"));
+    const hasBlueUltra = existingProducts.some(p => p.name.includes("BLUE Ultra"));
     
-    if (!hasNewProducts) {
+    if (!hasBlueUltra) {
       console.log("Updating database with new products...");
       
-      // Clear cart items first (foreign key constraint)
       await db.delete(cartItems);
-      
-      // Clear old products
       await db.delete(products);
       
-      // Insert new women's perfumes
       await db.insert(products).values([
+        {
+          name: "BLUE Ultra Eau de Toilette",
+          description: "A bold masculine fragrance with fresh citrus top notes, aromatic heart, and a warm woody base. 100ml of pure sophistication.",
+          price: "350.00",
+          scratchPrice: "550.00",
+          image: "/assets/blue-ultra.png",
+          category: "Eau de Toilette",
+          gender: "male",
+        },
         {
           name: "Foschini All Woman Blush Eau de Parfum",
           description: "A delicate feminine fragrance with soft floral notes and a touch of elegance. The perfect scent for the sophisticated woman.",
@@ -59,6 +63,5 @@ export async function seedDatabase() {
     }
   } catch (error) {
     console.error("Seed error:", error);
-    // Don't crash the app if seeding fails
   }
 }
