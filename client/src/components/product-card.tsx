@@ -25,11 +25,11 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card className="group overflow-visible hover-elevate border-0 shadow-lg" data-testid={`card-product-${product.id}`}>
-      <div className="relative aspect-square overflow-hidden rounded-t-md bg-muted">
+      <div className="relative aspect-square overflow-hidden rounded-t-md bg-white">
         <img
           src={product.image}
           alt={product.name}
-          className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+          className="object-contain w-full h-full p-2 transition-transform duration-500 group-hover:scale-105"
           data-testid={`img-product-${product.id}`}
         />
       </div>
