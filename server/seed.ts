@@ -5,9 +5,9 @@ export async function seedDatabase() {
   try {
     const existingProducts = await db.select().from(products);
     
-    const hasBlueUltra = existingProducts.some(p => p.name.includes("BLUE Ultra"));
+    const hasScrubs = existingProducts.some(p => p.name.includes("Oxy"));
     
-    if (!hasBlueUltra) {
+    if (!hasScrubs) {
       console.log("Updating database with new products...");
       
       await db.delete(cartItems);
@@ -54,6 +54,22 @@ export async function seedDatabase() {
           image: "/assets/perfume-female-4.png",
           category: "Eau de Toilette",
           gender: "female",
+        },
+        {
+          name: "Oxy Anti-Spot Daily Scrub 125ml",
+          description: "Gentle exfoliation that unblocks pores. Salicylic acid reduces appearance of inflamed skin. For soft & regenerated skin.",
+          price: "110.00",
+          image: "/assets/oxy-anti-spot-scrub.jpg",
+          category: "Scrubs",
+          gender: "unisex",
+        },
+        {
+          name: "Oxy Regular Face Wash 150ml",
+          description: "Daily face wash for healthy, clean skin. Removes dirt and oil while keeping skin fresh and hydrated.",
+          price: "85.00",
+          image: "/assets/oxy-regular-face-wash.jpg",
+          category: "Scrubs",
+          gender: "unisex",
         },
       ]);
       

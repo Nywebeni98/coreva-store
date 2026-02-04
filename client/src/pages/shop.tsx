@@ -16,6 +16,7 @@ export default function Shop() {
 
   const menProducts = products?.filter(p => p.gender === "male") || [];
   const womenProducts = products?.filter(p => p.gender === "female") || [];
+  const scrubProducts = products?.filter(p => p.category === "Scrubs") || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -28,7 +29,7 @@ export default function Shop() {
           </h1>
           <Separator className="w-24 mx-auto bg-secondary h-1 rounded-full" />
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Browse our curated selection of premium fragrances at unbeatable prices.
+            Browse our curated selection of premium fragrances and skincare at unbeatable prices.
           </p>
         </div>
 
@@ -59,13 +60,27 @@ export default function Shop() {
             )}
 
             {womenProducts.length > 0 && (
-              <div>
+              <div className="mb-16">
                 <div className="text-center mb-8">
                   <h2 className="text-2xl md:text-3xl font-bold tracking-tight">For Her</h2>
                   <p className="text-muted-foreground mt-2">Elegant perfumes for every occasion</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-testid="grid-women-products">
                   {womenProducts.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {scrubProducts.length > 0 && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Scrubs & Skincare</h2>
+                  <p className="text-muted-foreground mt-2">Daily essentials for healthy, glowing skin</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-testid="grid-scrubs-products">
+                  {scrubProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
