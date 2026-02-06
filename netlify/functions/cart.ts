@@ -1,15 +1,29 @@
 import type { Handler } from "@netlify/functions";
-import pg from "pg";
 
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
+interface CartItem {
+  id: string;
+  sessionId: string;
+  productId: number;
+  quantity: number;
+}
+
+const carts = new Map<string, CartItem[]>();
+let nextId = 1;
+
+const products = [
+  { id: 1, name: "BLUE Ultra Eau de Toilette", price: "350.00", scratchPrice: "550.00", image: "/assets/blue-ultra.png", category: "Eau de Toilette", gender: "male", description: "A bold masculine fragrance." },
+  { id: 2, name: "Foschini All Woman Blush Eau de Parfum", price: "280.00", scratchPrice: null, image: "/assets/perfume-female-1.webp", category: "Eau de Parfum", gender: "female", description: "A delicate feminine fragrance." },
+  { id: 3, name: "Foschini All Woman Blush Spritzer", price: "120.00", scratchPrice: null, image: "/assets/perfume-female-2.png", category: "Body Mist", gender: "female", description: "A light and refreshing body mist." },
+  { id: 4, name: "Foschini All Woman Fire Eau de Parfum", price: "320.00", scratchPrice: null, image: "/assets/perfume-female-3.png", category: "Eau de Parfum", gender: "female", description: "A bold and passionate fragrance." },
+  { id: 5, name: "Reflections Moonlit Kiss Eau de Toilette", price: "250.00", scratchPrice: null, image: "/assets/perfume-female-4.png", category: "Eau de Toilette", gender: "female", description: "An enchanting evening fragrance." },
+  { id: 6, name: "Oxy Anti-Spot Daily Scrub 125ml", price: "110.00", scratchPrice: null, image: "/assets/oxy-anti-spot-scrub.jpg", category: "Scrubs", gender: "unisex", description: "Gentle exfoliation scrub." },
+  { id: 7, name: "Oxy Regular Face Wash 150ml", price: "85.00", scratchPrice: null, image: "/assets/oxy-regular-face-wash.jpg", category: "Scrubs", gender: "unisex", description: "Daily face wash." },
+];
 
 export const handler: Handler = async (event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Content-Type": "application/json",
   };
@@ -19,111 +33,40 @@ export const handler: Handler = async (event) => {
   }
 
   if (event.httpMethod === "GET") {
-    try {
-      const sessionId = event.queryStringParameters?.sessionId;
-      if (!sessionId) {
-        return {
-          statusCode: 400,
-          headers,
-          body: JSON.stringify({ error: "Session ID required" }),
-        };
-      }
-
-      const result = await pool.query(
-        `SELECT ci.*, 
-          json_build_object(
-            'id', p.id,
-            'name', p.name,
-            'description', p.description,
-            'price', p.price,
-            'scratchPrice', p.scratch_price,
-            'image', p.image,
-            'category', p.category,
-            'gender', p.gender
-          ) as product
-        FROM cart_items ci
-        JOIN products p ON ci.product_id = p.id
-        WHERE ci.session_id = $1`,
-        [sessionId]
-      );
-
-      const items = result.rows.map((row) => ({
-        id: row.id,
-        sessionId: row.session_id,
-        productId: row.product_id,
-        quantity: row.quantity,
-        product: row.product,
-      }));
-
-      return { statusCode: 200, headers, body: JSON.stringify(items) };
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "Failed to fetch cart" }),
-      };
+    const sessionId = event.queryStringParameters?.sessionId;
+    if (!sessionId) {
+      return { statusCode: 200, headers, body: JSON.stringify([]) };
     }
+    const items = carts.get(sessionId) || [];
+    const itemsWithProducts = items.map(item => ({
+      ...item,
+      product: products.find(p => p.id === item.productId),
+    }));
+    return { statusCode: 200, headers, body: JSON.stringify(itemsWithProducts) };
   }
 
   if (event.httpMethod === "POST") {
-    try {
-      const { sessionId, productId, quantity = 1 } = JSON.parse(event.body || "{}");
-
-      const existing = await pool.query(
-        "SELECT * FROM cart_items WHERE session_id = $1 AND product_id = $2",
-        [sessionId, productId]
-      );
-
-      if (existing.rows.length > 0) {
-        const newQty = existing.rows[0].quantity + quantity;
-        const updated = await pool.query(
-          "UPDATE cart_items SET quantity = $1 WHERE id = $2 RETURNING *",
-          [newQty, existing.rows[0].id]
-        );
-        return { statusCode: 200, headers, body: JSON.stringify(updated.rows[0]) };
-      }
-
-      const result = await pool.query(
-        "INSERT INTO cart_items (session_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *",
-        [sessionId, productId, quantity]
-      );
-      return { statusCode: 200, headers, body: JSON.stringify(result.rows[0]) };
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "Failed to add to cart" }),
-      };
+    const { sessionId, productId, quantity = 1 } = JSON.parse(event.body || "{}");
+    if (!carts.has(sessionId)) carts.set(sessionId, []);
+    const items = carts.get(sessionId)!;
+    const existing = items.find(i => i.productId === productId);
+    if (existing) {
+      existing.quantity += quantity;
+      return { statusCode: 200, headers, body: JSON.stringify(existing) };
     }
+    const newItem: CartItem = { id: String(nextId++), sessionId, productId, quantity };
+    items.push(newItem);
+    return { statusCode: 200, headers, body: JSON.stringify(newItem) };
   }
 
   if (event.httpMethod === "DELETE") {
-    try {
-      const sessionId = event.queryStringParameters?.sessionId;
-      if (sessionId) {
-        await pool.query("DELETE FROM cart_items WHERE session_id = $1", [sessionId]);
-        return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
-      }
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: "Session ID required" }),
-      };
-    } catch (error) {
-      console.error("Error clearing cart:", error);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "Failed to clear cart" }),
-      };
+    const sessionId = event.queryStringParameters?.sessionId;
+    if (sessionId) {
+      carts.delete(sessionId);
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
     }
+    return { statusCode: 400, headers, body: JSON.stringify({ error: "Session ID required" }) };
   }
 
-  return {
-    statusCode: 405,
-    headers,
-    body: JSON.stringify({ error: "Method not allowed" }),
-  };
+  return { statusCode: 405, headers, body: JSON.stringify({ error: "Method not allowed" }) };
 };
