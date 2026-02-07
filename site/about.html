@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Coreva Store</title>
+  <meta name="description" content="Learn about Coreva Store - your one-stop shop for everyday essentials at unbeatable combo prices.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="Coreva Store">
+        Coreva Store
+      </a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">&#9776;</button>
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button class="cart-btn" onclick="openCart()">
+        Cart <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ABOUT HERO -->
+  <section class="about-hero">
+    <div class="container">
+      <h1>About Coreva Store</h1>
+      <p>Your trusted source for everyday essentials at prices that make sense.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT CONTENT -->
+  <div class="about-content">
+    <h2>Our Story</h2>
+    <p>Coreva Store was born from a simple idea: everyday essentials shouldn't cost a fortune. We believe that everyone deserves access to quality products — from breakfast cereals to premium fragrances — without breaking the bank.</p>
+
+    <h2>What We Offer</h2>
+    <p>We specialize in combo deals that bundle everyday products together at unbeatable prices. Our range includes perfumes, cereals, household items, pest control products, and skincare essentials. Every combo is carefully curated to give you the best value for your money.</p>
+
+    <h2>Why Combos?</h2>
+    <p>Buying in combos saves you money compared to purchasing items individually. We work directly with suppliers to negotiate the best prices, and we pass those savings on to you. No complicated pricing — just smart deals on products you use every day.</p>
+
+    <h2>Our Promise</h2>
+    <p>We are committed to offering genuine products at honest prices. All our prices are in South African Rand (ZAR), and we aim to make your shopping experience as simple and convenient as possible.</p>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section section-muted">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">%</div>
+          <h3>Best Prices</h3>
+          <p>Combo deals that save you more on everyday essentials.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">OK</div>
+          <h3>Genuine Products</h3>
+          <p>Only authentic, quality products from trusted brands.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">+</div>
+          <h3>Customer First</h3>
+          <p>Your satisfaction is our top priority, always.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Coreva Store</h4>
+          <p>Your one-stop shop for everyday essentials at unbeatable prices.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="shop.html">Shop</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <span>South Africa</span><br>
+          <span>Prices in ZAR (R)</span>
+        </div>
+      </div>
+      <div class="footer-bottom">Coreva Online Store. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty">Your cart is empty</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cart-total">R0.00</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="alert('Checkout coming soon!')">Checkout</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

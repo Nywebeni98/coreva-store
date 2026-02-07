@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coreva Store - Smart Shopping, Unbeatable Combos</title>
+  <meta name="description" content="Shop combo deals on cereals, perfumes, household essentials, pest control and more — all at unbeatable prices in South African Rand.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="Coreva Store">
+        Coreva Store
+      </a>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">&#9776;</button>
+      <nav id="main-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <button class="cart-btn" onclick="openCart()">
+        Cart <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Smart Shopping</div>
+        <h1>Everything You Need.<br><span>One Combo. One Price.</span></h1>
+        <p>Shop combo deals on cereals, perfumes, household essentials, pest control and more — all at unbeatable prices.</p>
+        <div class="hero-buttons">
+          <a href="shop.html" class="btn btn-primary">Shop Combos</a>
+          <a href="shop.html" class="btn btn-outline">View Deals &rarr;</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/hero-combo.png" alt="Combo deals featuring cereals, perfumes, and skincare products">
+      </div>
+    </div>
+  </section>
+
+  <!-- CAROUSEL -->
+  <section class="carousel" id="carousel">
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-slide"><img src="assets/cereals-combo.jpeg" alt="Cereals combo"></div>
+      <div class="carousel-slide"><img src="assets/skincare-combo.jpeg" alt="Skincare combo"></div>
+      <div class="carousel-slide"><img src="assets/pest-control.jpeg" alt="Pest control"></div>
+      <div class="carousel-slide"><img src="assets/body-products.jpeg" alt="Body products"></div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section section-muted">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Choose Coreva Store?</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">%</div>
+          <h3>Discounted Combos</h3>
+          <p>Save more when you buy everyday items together.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">All</div>
+          <h3>Everything in One Place</h3>
+          <p>Food, fragrance, and household essentials — no need to shop around.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">Fast</div>
+          <h3>Convenient Shopping</h3>
+          <p>Order online and get value delivered to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR COMBOS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="label">Best Sellers</p>
+        <h2>Popular Combo Deals</h2>
+        <div class="divider"></div>
+        <p class="desc">Handpicked bundles designed to save you money on items you use every day.</p>
+      </div>
+      <div class="combos-grid">
+        <div class="combo-card">
+          <img src="assets/cereals-combo.jpeg" alt="Breakfast Combo" class="combo-card-img">
+          <div class="combo-card-body">
+            <h3>Breakfast Combo</h3>
+            <p>Cereals + essentials for the whole family</p>
+          </div>
+        </div>
+        <div class="combo-card">
+          <img src="assets/skincare-combo.jpeg" alt="Fresh & Fragrance Combo" class="combo-card-img">
+          <div class="combo-card-body">
+            <h3>Fresh & Fragrance Combo</h3>
+            <p>Perfumes at discounted prices</p>
+          </div>
+        </div>
+        <div class="combo-card">
+          <img src="assets/pest-control.jpeg" alt="Home Care Combo" class="combo-card-img">
+          <div class="combo-card-body">
+            <h3>Home Care Combo</h3>
+            <p>Cleaning & pest control essentials</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="section section-muted trust">
+    <div class="container">
+      <p>We focus on value. No complicated pricing. Just smart deals on everyday products.</p>
+      <div class="stars" style="color:var(--secondary);">* * * * *</div>
+      <p class="note">Trusted by customers who love saving</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-dark cta">
+    <div class="container">
+      <h2>Ready to Save More?</h2>
+      <p>Browse our combo deals and get more for less today.</p>
+      <a href="shop.html" class="btn btn-primary">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Coreva Store</h4>
+          <p>Your one-stop shop for everyday essentials at unbeatable prices.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="shop.html">Shop</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <span>South Africa</span><br>
+          <span>Prices in ZAR (R)</span>
+        </div>
+      </div>
+      <div class="footer-bottom">Coreva Online Store. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="closeCart()">&times;</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty">Your cart is empty</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cart-total">R0.00</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="alert('Checkout coming soon!')">Checkout</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
