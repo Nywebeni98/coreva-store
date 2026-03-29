@@ -1,4 +1,4 @@
-import { ShoppingCart, Menu } from "lucide-react";
+import { ShoppingCart, Menu, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useCart } from "../lib/cart-context";
@@ -59,6 +59,17 @@ export function Header({ onCartClick }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-2">
+            <Link href="/sign-in">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hidden md:flex gap-2 text-muted-foreground hover:text-foreground"
+                data-testid="button-sign-in"
+              >
+                <User className="h-4 w-4" />
+                Sign In
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               size="icon"
@@ -106,6 +117,15 @@ export function Header({ onCartClick }: HeaderProps) {
                   </span>
                 </Link>
               ))}
+              <Link href="/sign-in">
+                <span
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-semibold uppercase tracking-wide transition-colors cursor-pointer block py-2 text-muted-foreground hover:text-secondary flex items-center gap-2"
+                >
+                  <User className="h-4 w-4" />
+                  Sign In
+                </span>
+              </Link>
             </div>
           </nav>
         )}
