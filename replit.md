@@ -20,10 +20,15 @@ Coreva Store is an online e-commerce store specializing in everyday essentials i
 
 ## Products
 1. **BLUE Ultra Eau de Toilette** - R350.00 (was R550.00) - Masculine fragrance with citrus, cedar, and musk notes
-2. **Foschini All Woman Blush Eau de Parfum** - R280.00 - Feminine floral fragrance
-3. **Foschini All Woman Blush Spritzer** - R120.00 - Light feminine fragrance
-4. **Foschini All Woman Fire Eau de Parfum** - R320.00 - Bold feminine fragrance
-5. **Reflections Moonlit Kiss Eau de Toilette** - R250.00 - Romantic feminine fragrance
+2. **Reflections & Blue Men's Combo** - R550.00 - Men's fragrance combo
+3. **Foschini All Woman Blush Eau de Parfum** - R280.00 - Feminine floral fragrance
+4. **Foschini All Woman Blush Spritzer** - R120.00 - Light feminine fragrance
+5. **Foschini All Woman Fire Eau de Parfum** - R280.00 - Bold feminine fragrance
+6. **Reflections Moonlit Kiss Eau de Toilette** - R250.00 - Romantic feminine fragrance
+7. **Foschini Sky & Blush Combo** - R500.00 - Feminine fragrance combo
+8. **Foschini & Woolworths Reflex Combo** - R600.00 - Premium feminine fragrance combo
+9. **Oxy Anti-Spot Daily Scrub 125ml** - R110.00 - Skincare
+10. **Oxy Regular Face Wash 150ml** - R85.00 - Skincare
 
 ## Tech Stack
 - **Frontend**: React with TypeScript, TanStack Query, Wouter router
