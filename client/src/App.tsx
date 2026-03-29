@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import Shop from "./pages/shop";
 import About from "./pages/about";
 import Contact from "./pages/contact";
+import SignIn from "./pages/signin";
 import NotFound from "./pages/not-found";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/shop" component={Shop} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
+      <Route path="/signin" component={SignIn} />
       <Route component={NotFound} />
     </Switch>
   );

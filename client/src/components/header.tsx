@@ -1,4 +1,4 @@
-import { ShoppingCart, Menu } from "lucide-react";
+import { ShoppingCart, Menu, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useCart } from "../lib/cart-context";
@@ -68,6 +68,26 @@ export function Header({ onCartClick }: HeaderProps) {
             >
               <Menu className="h-5 w-5" />
             </Button>
+            <Link href="/signin">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hidden md:flex items-center gap-2"
+                data-testid="button-signin"
+              >
+                <User className="h-4 w-4" />
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/signin" className="md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                data-testid="button-signin-mobile"
+              >
+                <User className="h-5 w-5" />
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="icon"
