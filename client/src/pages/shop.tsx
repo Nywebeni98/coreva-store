@@ -5,7 +5,7 @@ import { ProductCard } from "../components/product-card";
 import { CartSheet } from "../components/cart-sheet";
 import { Skeleton } from "../components/ui/skeleton";
 import { Separator } from "../components/ui/separator";
-import type { Product } from "@shared/schema";
+import type { Product } from "@/lib/types";
 
 const staticProducts: Product[] = [
   {

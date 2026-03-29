@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import type { CartItemWithProduct } from "@shared/schema";
+import type { CartItemWithProduct } from "./types";
 
 interface CartContextType {
   items: CartItemWithProduct[];

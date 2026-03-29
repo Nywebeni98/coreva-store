@@ -2,7 +2,7 @@ import { ShoppingCart, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCart } from "@/lib/cart-context";
-import type { Product } from "@shared/schema";
+import type { Product } from "@/lib/types";
 import { useState } from "react";
 
 interface ProductCardProps {
