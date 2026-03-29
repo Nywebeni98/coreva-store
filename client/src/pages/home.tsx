@@ -125,9 +125,10 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="overflow-hidden border-0 shadow-lg hover-elevate">
-              <div className="aspect-video relative overflow-hidden">
-                <img src="/assets/cereals-combo.jpeg" alt="Breakfast Combo" className="w-full h-full object-cover" />
+            <Card className="group overflow-hidden border-0 shadow-lg hover-elevate">
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <img src="/assets/cereals-combo.jpeg" alt="Breakfast Combo" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <CardContent className="p-6">
                 <h3 className="font-bold text-lg mb-2">Breakfast Combo</h3>
@@ -135,9 +136,10 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="overflow-hidden border-0 shadow-lg hover-elevate">
-              <div className="aspect-video relative overflow-hidden">
-                <img src="/assets/skincare-combo.jpeg" alt="Fresh & Fragrance Combo" className="w-full h-full object-cover" />
+            <Card className="group overflow-hidden border-0 shadow-lg hover-elevate">
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <img src="/assets/skincare-combo.jpeg" alt="Fresh & Fragrance Combo" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <CardContent className="p-6">
                 <h3 className="font-bold text-lg mb-2">Fresh & Fragrance Combo</h3>
@@ -145,9 +147,10 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="overflow-hidden border-0 shadow-lg hover-elevate">
-              <div className="aspect-video relative overflow-hidden">
-                <img src="/assets/pest-control.jpeg" alt="Home Care Combo" className="w-full h-full object-cover" />
+            <Card className="group overflow-hidden border-0 shadow-lg hover-elevate">
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <img src="/assets/pest-control.jpeg" alt="Home Care Combo" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <CardContent className="p-6">
                 <h3 className="font-bold text-lg mb-2">Home Care Combo</h3>

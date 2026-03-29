@@ -25,11 +25,12 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card className="group overflow-visible hover-elevate border-0 shadow-lg" data-testid={`card-product-${product.id}`}>
-      <div className="relative aspect-square overflow-hidden rounded-t-md bg-white">
+      <div className="relative aspect-square overflow-hidden rounded-t-md bg-gradient-to-br from-slate-50 to-white">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
         <img
           src={product.image}
           alt={product.name}
-          className="object-contain w-full h-full p-2 transition-transform duration-500 group-hover:scale-105"
+          className="object-contain w-full h-full p-4 transition-all duration-500 group-hover:scale-110"
           data-testid={`img-product-${product.id}`}
         />
       </div>
