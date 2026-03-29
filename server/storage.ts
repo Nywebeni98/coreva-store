@@ -1,18 +1,36 @@
-import { db } from "./db";
-import { eq, and } from "drizzle-orm";
-import {
-  users,
-  products,
-  cartItems,
-  type User,
-  type InsertUser,
-  type Product,
-  type InsertProduct,
-  type CartItem,
-  type InsertCartItem,
-  type CartItemWithProduct,
-} from "@shared/schema";
 import { randomUUID } from "crypto";
+
+export interface User {
+  id: string;
+  username: string;
+  password: string;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  scratchPrice: string | null;
+  image: string;
+  category: string;
+  gender: string;
+}
+
+export interface CartItem {
+  id: string;
+  sessionId: string;
+  productId: string;
+  quantity: number;
+}
+
+export interface CartItemWithProduct extends CartItem {
+  product: Product;
+}
+
+export type InsertUser = Omit<User, "id">;
+export type InsertProduct = Omit<Product, "id">;
+export type InsertCartItem = Omit<CartItem, "id">;
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -30,41 +48,43 @@ export interface IStorage {
   clearCart(sessionId: string): Promise<void>;
 }
 
-export class DatabaseStorage implements IStorage {
+class MemoryStorage implements IStorage {
+  private users: Map<string, User> = new Map();
+  private products: Map<string, Product> = new Map();
+  private cartItems: Map<string, CartItem> = new Map();
+
   async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
+    return this.users.get(id);
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user;
+    return Array.from(this.users.values()).find(u => u.username === username);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values(insertUser).returning();
+    const user: User = { id: randomUUID(), ...insertUser };
+    this.users.set(user.id, user);
     return user;
   }
 
   async getAllProducts(): Promise<Product[]> {
-    return db.select().from(products);
+    return Array.from(this.products.values());
   }
 
   async getProduct(id: string): Promise<Product | undefined> {
-    const [product] = await db.select().from(products).where(eq(products.id, id));
-    return product;
+    return this.products.get(id);
   }
 
   async createProduct(product: InsertProduct): Promise<Product> {
-    const [newProduct] = await db.insert(products).values(product).returning();
+    const newProduct: Product = { id: randomUUID(), ...product };
+    this.products.set(newProduct.id, newProduct);
     return newProduct;
   }
 
   async getCartItems(sessionId: string): Promise<CartItemWithProduct[]> {
-    const items = await db
-      .select()
-      .from(cartItems)
-      .where(eq(cartItems.sessionId, sessionId));
+    const items = Array.from(this.cartItems.values()).filter(
+      item => item.sessionId === sessionId
+    );
 
     const itemsWithProducts: CartItemWithProduct[] = [];
     for (const item of items) {
@@ -77,46 +97,40 @@ export class DatabaseStorage implements IStorage {
   }
 
   async addToCart(item: InsertCartItem): Promise<CartItem> {
-    const existing = await db
-      .select()
-      .from(cartItems)
-      .where(
-        and(
-          eq(cartItems.sessionId, item.sessionId),
-          eq(cartItems.productId, item.productId)
-        )
-      );
+    const existing = Array.from(this.cartItems.values()).find(
+      ci => ci.sessionId === item.sessionId && ci.productId === item.productId
+    );
 
-    if (existing.length > 0) {
-      const newQuantity = existing[0].quantity + (item.quantity || 1);
-      const [updated] = await db
-        .update(cartItems)
-        .set({ quantity: newQuantity })
-        .where(eq(cartItems.id, existing[0].id))
-        .returning();
-      return updated;
+    if (existing) {
+      existing.quantity += item.quantity || 1;
+      return existing;
     }
 
-    const [newItem] = await db.insert(cartItems).values(item).returning();
+    const newItem: CartItem = { id: randomUUID(), ...item, quantity: item.quantity || 1 };
+    this.cartItems.set(newItem.id, newItem);
     return newItem;
   }
 
   async updateCartItemQuantity(id: string, quantity: number): Promise<CartItem | undefined> {
-    const [updated] = await db
-      .update(cartItems)
-      .set({ quantity })
-      .where(eq(cartItems.id, id))
-      .returning();
-    return updated;
+    const item = this.cartItems.get(id);
+    if (item) {
+      item.quantity = quantity;
+      return item;
+    }
+    return undefined;
   }
 
   async removeCartItem(id: string): Promise<void> {
-    await db.delete(cartItems).where(eq(cartItems.id, id));
+    this.cartItems.delete(id);
   }
 
   async clearCart(sessionId: string): Promise<void> {
-    await db.delete(cartItems).where(eq(cartItems.sessionId, sessionId));
+    for (const [id, item] of this.cartItems.entries()) {
+      if (item.sessionId === sessionId) {
+        this.cartItems.delete(id);
+      }
+    }
   }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new MemoryStorage();
