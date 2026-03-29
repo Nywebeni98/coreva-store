@@ -3,59 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coreva Store - Smart Shopping, Unbeatable Combos</title>
-  <meta name="description" content="Shop combo deals on cereals, perfumes, household essentials, pest control and more — all at unbeatable prices in South African Rand.">
+  <title>Coreva Online Store - Premium Fragrances & Essentials</title>
+  <meta name="description" content="Shop premium fragrances, skincare and household essentials at unbeatable combo prices. South Africa's favourite online store.">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="assets/logo.png" type="image/png">
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- NAV BAR -->
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-        <img src="assets/logo.png" alt="Coreva Store">
-      </a>
-      <button class="mobile-menu-btn" onclick="toggleMenu()">&#9776;</button>
-      <nav id="main-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <button class="cart-btn" onclick="openCart()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        Cart <span class="cart-badge" id="cart-count">0</span>
-      </button>
+      <div class="header-left">
+        <button class="mobile-menu-btn" onclick="toggleMenu()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav id="main-nav">
+          <a href="index.html" class="active">Home</a>
+          <a href="shop.html">Shop</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="social-icons">
+          <a href="https://www.facebook.com/profile.php?id=61586778732498" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="social-icon" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+          </a>
+        </div>
+        <button class="cart-btn" onclick="openCart()" aria-label="Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-badge" id="cart-count">0</span>
+        </button>
+      </div>
     </div>
   </header>
 
+  <!-- LOGO BANNER -->
+  <div class="logo-banner">
+    <img src="assets/logo.png" alt="Coreva Online Store">
+  </div>
+
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-badge">Smart Shopping</div>
-        <h1>Everything You Need.<br><span>One Combo. One Price.</span></h1>
-        <p>Shop combo deals on cereals, perfumes, household essentials, pest control and more — all at unbeatable prices.</p>
-        <div class="hero-buttons">
-          <a href="shop.html" class="btn btn-primary">Shop Combos</a>
-          <a href="shop.html" class="btn btn-outline">View Deals &rarr;</a>
-        </div>
-      </div>
-
-
+    <h1>Welcome to Coreva Online Store</h1>
+    <p>Discover premium fragrances, skincare and everyday essentials at unbeatable combo prices.</p>
+    <div class="hero-buttons">
+      <a href="shop.html" class="btn btn-primary">Shop Now</a>
+      <a href="#combos" class="btn btn-outline">View Deals &rarr;</a>
     </div>
   </section>
 
   <!-- CAROUSEL -->
-  <section class="carousel" id="carousel">
+  <div class="carousel">
     <div class="carousel-track" id="carousel-track">
       <div class="carousel-slide"><img src="assets/cereals-combo.jpeg" alt="Cereals combo"></div>
       <div class="carousel-slide"><img src="assets/skincare-combo.jpeg" alt="Skincare combo"></div>
       <div class="carousel-slide"><img src="assets/pest-control.jpeg" alt="Pest control"></div>
       <div class="carousel-slide"><img src="assets/body-products.jpeg" alt="Body products"></div>
     </div>
-  </section>
+  </div>
 
   <!-- WHY CHOOSE US -->
   <section class="section section-muted">
@@ -66,26 +75,26 @@
       </div>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">%</div>
+          <div class="feature-icon">%</div>
           <h3>Discounted Combos</h3>
           <p>Save more when you buy everyday items together.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">All</div>
+          <div class="feature-icon">All</div>
           <h3>Everything in One Place</h3>
-          <p>Food, fragrance, and household essentials — no need to shop around.</p>
+          <p>Food, fragrance and household essentials — no need to shop around.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon" style="color:var(--secondary);font-weight:800;">Fast</div>
-          <h3>Convenient Shopping</h3>
-          <p>Order online and get value delivered to you.</p>
+          <div class="feature-icon">&#9733;</div>
+          <h3>Trusted Quality</h3>
+          <p>Premium products at prices our customers love.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- POPULAR COMBOS -->
-  <section class="section">
+  <section class="section" id="combos">
     <div class="container">
       <div class="section-header">
         <p class="label">Best Sellers</p>
@@ -95,21 +104,21 @@
       </div>
       <div class="combos-grid">
         <div class="combo-card">
-          <img src="assets/cereals-combo.jpeg" alt="Breakfast Combo" class="combo-card-img">
+          <img src="assets/cereals-combo.jpeg" alt="Breakfast Combo">
           <div class="combo-card-body">
             <h3>Breakfast Combo</h3>
             <p>Cereals + essentials for the whole family</p>
           </div>
         </div>
         <div class="combo-card">
-          <img src="assets/skincare-combo.jpeg" alt="Fresh & Fragrance Combo" class="combo-card-img">
+          <img src="assets/skincare-combo.jpeg" alt="Fresh & Fragrance Combo">
           <div class="combo-card-body">
             <h3>Fresh & Fragrance Combo</h3>
             <p>Perfumes at discounted prices</p>
           </div>
         </div>
         <div class="combo-card">
-          <img src="assets/pest-control.jpeg" alt="Home Care Combo" class="combo-card-img">
+          <img src="assets/pest-control.jpeg" alt="Home Care Combo">
           <div class="combo-card-body">
             <h3>Home Care Combo</h3>
             <p>Cleaning & pest control essentials</p>
@@ -134,7 +143,7 @@
           <div class="product-card-body">
             <h3>Reflections & Blue Men's Combo</h3>
             <div class="product-card-footer">
-              <div><div class="price-current">R550.00</div></div>
+              <div class="price-current">R550.00</div>
               <button class="btn-add" onclick="addToCart('Reflections & Blue Men\'s Combo', 550, 'assets/reflections-blu-men-combo.jpeg')">+ Add</button>
             </div>
           </div>
@@ -144,7 +153,7 @@
           <div class="product-card-body">
             <h3>Foschini Sky & Blush Combo</h3>
             <div class="product-card-footer">
-              <div><div class="price-current">R500.00</div></div>
+              <div class="price-current">R500.00</div>
               <button class="btn-add" onclick="addToCart('Foschini Sky & Blush Combo', 500, 'assets/foschini-sky-blush-combo.jpeg')">+ Add</button>
             </div>
           </div>
@@ -154,32 +163,32 @@
           <div class="product-card-body">
             <h3>Foschini & Woolworths Reflex Combo</h3>
             <div class="product-card-footer">
-              <div><div class="price-current">R600.00</div></div>
+              <div class="price-current">R600.00</div>
               <button class="btn-add" onclick="addToCart('Foschini & Woolworths Reflex Combo', 600, 'assets/foschini-woolworths-combo.jpeg')">+ Add</button>
             </div>
           </div>
         </div>
       </div>
-      <div style="text-align:center;margin-top:32px;">
-        <a href="shop.html" class="btn btn-primary">View All Products</a>
+      <div style="text-align:center;margin-top:36px;">
+        <a href="shop.html" class="btn btn-primary" style="background:#0891b2;color:white;">View All Products</a>
       </div>
     </div>
   </section>
 
   <!-- TRUST -->
-  <section class="section section-muted trust">
+  <section class="section trust">
     <div class="container">
       <p>We focus on value. No complicated pricing. Just smart deals on everyday products.</p>
-      <div class="stars" style="color:var(--secondary);">* * * * *</div>
+      <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
       <p class="note">Trusted by customers who love saving</p>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="section section-dark cta">
+  <section class="section section-teal cta">
     <div class="container">
       <h2>Ready to Save More?</h2>
-      <p>Browse our combo deals and get more for less today.</p>
+      <p>Browse our full range of combo deals and get more for less today.</p>
       <a href="shop.html" class="btn btn-primary">Shop Now</a>
     </div>
   </section>
@@ -189,30 +198,36 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>Coreva Store</h4>
-          <p>Your one-stop shop for everyday essentials at unbeatable prices.</p>
+          <h4>Coreva Online Store</h4>
+          <p>Your destination for premium fragrances and everyday essentials at unbeatable prices.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=61586778732498" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+            </a>
+          </div>
         </div>
         <div>
           <h4>Quick Links</h4>
           <div class="footer-links">
             <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
             <a href="shop.html">Shop</a>
+            <a href="about.html">About Us</a>
             <a href="contact.html">Contact</a>
           </div>
         </div>
         <div>
           <h4>Contact</h4>
-          <span>South Africa</span><br>
-          <span>Prices in ZAR (R)</span>
-          <div class="social-links">
-            <a href="https://www.facebook.com/profile.php?id=61586778732498" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
+          <div class="footer-links">
+            <a href="mailto:corevaonlinestore@gmail.com">corevaonlinestore@gmail.com</a>
+            <span>South Africa</span>
+            <span>Prices in ZAR (R)</span>
           </div>
         </div>
       </div>
-      <div class="footer-bottom">Coreva Online Store. All rights reserved.</div>
+      <div class="footer-bottom">&copy; 2026 Coreva Online Store. All rights reserved.</div>
     </div>
   </footer>
 
@@ -231,9 +246,12 @@
         <span>Total</span>
         <span id="cart-total">R0.00</span>
       </div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="alert('Checkout coming soon!')">Checkout</button>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;background:#0891b2;color:white;" onclick="alert('Checkout coming soon!')">Proceed to Checkout</button>
     </div>
   </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
 
   <script src="script.js"></script>
 </body>

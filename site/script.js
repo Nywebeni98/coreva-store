@@ -1,5 +1,5 @@
 // CART
-let cart = JSON.parse(localStorage.getItem('coreva_cart') || '[]');
+var cart = JSON.parse(localStorage.getItem('coreva_cart') || '[]');
 
 function saveCart() {
   localStorage.setItem('coreva_cart', JSON.stringify(cart));
@@ -7,14 +7,14 @@ function saveCart() {
 }
 
 function addToCart(name, price, image) {
-  const existing = cart.find(item => item.name === name);
+  var existing = cart.find(function(item) { return item.name === name; });
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ name, price, image, qty: 1 });
+    cart.push({ name: name, price: price, image: image, qty: 1 });
   }
   saveCart();
-  openCart();
+  showToast('Added to cart!');
 }
 
 function removeFromCart(index) {
@@ -34,7 +34,6 @@ function updateCartUI() {
   var countEl = document.getElementById('cart-count');
   var bodyEl = document.getElementById('cart-body');
   var totalEl = document.getElementById('cart-total');
-
   if (!countEl) return;
 
   var totalItems = cart.reduce(function(s, i) { return s + i.qty; }, 0);
@@ -87,8 +86,17 @@ function toggleMenu() {
 // CONTACT FORM
 function handleContact(e) {
   e.preventDefault();
-  alert('Thank you for your message! We will get back to you soon.');
+  showToast('Message sent! We will get back to you soon.');
   e.target.reset();
+}
+
+// TOAST
+function showToast(msg) {
+  var toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2800);
 }
 
 // CAROUSEL
