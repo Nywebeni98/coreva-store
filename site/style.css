@@ -288,7 +288,7 @@ nav a:hover, nav a.active {
   padding: 24px 20px 18px;
   border-bottom: 1px solid var(--border);
 }
-.logo-banner img { height: 120px; width: auto; object-fit: contain; }
+.logo-banner img { height: 144px; width: auto; object-fit: contain; }
 
 /* ─── PAGE HERO ───────────────────────────────────── */
 .page-hero {
@@ -644,7 +644,7 @@ nav a:hover, nav a.active {
   }
   .mobile-menu-btn { display: flex; }
   .social-icons { display: none; }
-  .logo-banner img { height: 80px; }
+  .logo-banner img { height: 96px; }
   .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .combos-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
