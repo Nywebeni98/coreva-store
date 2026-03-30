@@ -6,18 +6,15 @@
   <title>Sign In - Coreva Online Store</title>
   <meta name="description" content="Sign in to Coreva Online Store to shop premium fragrances and essentials.">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="icon" href="assets/logo-shop.png" type="image/png">
 </head>
 <body>
 
   <div class="auth-page">
     <div class="auth-card">
       <div class="auth-logo">
-        <img src="assets/logo-auth.png" alt="Coreva Online Store">
+        <img src="assets/logo-signin.png" alt="Coreva Online Store">
       </div>
-
-      <h1 class="auth-title">Welcome Back</h1>
-      <p class="auth-subtitle">Sign in to access Coreva Online Store</p>
 
       <div class="auth-error" id="auth-error"></div>
 
@@ -32,10 +29,16 @@
         Continue with Google
       </button>
 
-      <div class="auth-divider">or sign in with email</div>
+      <div class="auth-divider">or continue with email</div>
 
-      <!-- Sign In Form -->
-      <div id="signin-view">
+      <!-- Auth Method Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-password" onclick="switchTab('password')">Password</button>
+        <button class="auth-tab" id="tab-otp" onclick="switchTab('otp')">Email OTP</button>
+      </div>
+
+      <!-- Password Sign In -->
+      <div id="view-signin">
         <div class="email-form">
           <div class="form-group">
             <label>Email</label>
@@ -51,7 +54,7 @@
       </div>
 
       <!-- Sign Up Form -->
-      <div id="signup-view" style="display:none;">
+      <div id="view-signup" style="display:none;">
         <div class="email-form">
           <div class="form-group">
             <label>Full Name</label>
@@ -70,6 +73,31 @@
         <p class="auth-switch">Already have an account? <a onclick="showSignIn()">Sign in</a></p>
       </div>
 
+      <!-- OTP Step 1: Enter Email -->
+      <div id="view-otp-email" style="display:none;">
+        <div class="email-form">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="otp-email" placeholder="your@email.com">
+          </div>
+          <button class="primary-btn" onclick="handleSendOTP()">Send OTP Code</button>
+        </div>
+        <p class="auth-hint">We'll send a 6-digit code to your email.</p>
+      </div>
+
+      <!-- OTP Step 2: Enter Code -->
+      <div id="view-otp-verify" style="display:none;">
+        <div class="email-form">
+          <div class="form-group">
+            <label>6-Digit OTP Code</label>
+            <input type="text" id="otp-code" placeholder="Enter the code from your email" maxlength="6" inputmode="numeric">
+          </div>
+          <button class="primary-btn" onclick="handleVerifyOTP()">Verify & Sign In</button>
+          <button class="secondary-btn" onclick="backToOTPEmail()" style="margin-top:8px;">Use different email</button>
+        </div>
+        <p class="auth-hint" id="otp-email-hint"></p>
+      </div>
+
       <p class="auth-loading" id="auth-loading">Please wait...</p>
     </div>
   </div>
@@ -77,6 +105,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
   <script>
+    var currentOTPEmail = '';
+
     document.addEventListener('DOMContentLoaded', async function() {
       await redirectIfSignedIn();
     });
@@ -84,36 +114,53 @@
     function showError(msg) {
       var el = document.getElementById('auth-error');
       el.textContent = msg;
-      el.style.display = 'block';
-    }
-
-    function clearError() {
-      var el = document.getElementById('auth-error');
-      el.style.display = 'none';
+      el.style.display = msg ? 'block' : 'none';
     }
 
     function setLoading(on) {
       document.getElementById('auth-loading').style.display = on ? 'block' : 'none';
     }
 
+    function hideAllViews() {
+      ['view-signin','view-signup','view-otp-email','view-otp-verify'].forEach(function(id) {
+        document.getElementById(id).style.display = 'none';
+      });
+    }
+
+    function switchTab(tab) {
+      showError('');
+      document.getElementById('tab-password').classList.toggle('active', tab === 'password');
+      document.getElementById('tab-otp').classList.toggle('active', tab === 'otp');
+      hideAllViews();
+      if (tab === 'password') {
+        document.getElementById('view-signin').style.display = 'block';
+      } else {
+        document.getElementById('view-otp-email').style.display = 'block';
+      }
+    }
+
     function showSignUp() {
-      clearError();
-      document.getElementById('signin-view').style.display = 'none';
-      document.getElementById('signup-view').style.display = 'block';
-      document.querySelector('.auth-title').textContent = 'Create Account';
-      document.querySelector('.auth-subtitle').textContent = 'Join Coreva Online Store today';
+      showError('');
+      hideAllViews();
+      document.getElementById('view-signup').style.display = 'block';
     }
 
     function showSignIn() {
-      clearError();
-      document.getElementById('signup-view').style.display = 'none';
-      document.getElementById('signin-view').style.display = 'block';
-      document.querySelector('.auth-title').textContent = 'Welcome Back';
-      document.querySelector('.auth-subtitle').textContent = 'Sign in to access Coreva Online Store';
+      showError('');
+      hideAllViews();
+      document.getElementById('view-signin').style.display = 'block';
+      document.getElementById('tab-password').classList.add('active');
+      document.getElementById('tab-otp').classList.remove('active');
+    }
+
+    function backToOTPEmail() {
+      showError('');
+      document.getElementById('view-otp-verify').style.display = 'none';
+      document.getElementById('view-otp-email').style.display = 'block';
     }
 
     async function handleGoogleSignIn() {
-      clearError();
+      showError('');
       setLoading(true);
       var error = await signInWithGoogle();
       if (error) {
@@ -123,7 +170,7 @@
     }
 
     async function handleEmailSignIn() {
-      clearError();
+      showError('');
       var email = document.getElementById('signin-email').value.trim();
       var password = document.getElementById('signin-password').value;
       if (!email || !password) { showError('Please enter your email and password.'); return; }
@@ -138,7 +185,7 @@
     }
 
     async function handleEmailSignUp() {
-      clearError();
+      showError('');
       var name = document.getElementById('signup-name').value.trim();
       var email = document.getElementById('signup-email').value.trim();
       var password = document.getElementById('signup-password').value;
@@ -151,9 +198,39 @@
         showError(result.error.message || 'Sign up failed. Please try again.');
       } else {
         showError('');
-        document.getElementById('auth-error').style.display = 'none';
         alert('Account created! Please check your email to confirm, then sign in.');
         showSignIn();
+      }
+    }
+
+    async function handleSendOTP() {
+      showError('');
+      var email = document.getElementById('otp-email').value.trim();
+      if (!email) { showError('Please enter your email address.'); return; }
+      setLoading(true);
+      var result = await sendOTP(email);
+      setLoading(false);
+      if (result.error) {
+        showError(result.error.message || 'Failed to send OTP. Please try again.');
+      } else {
+        currentOTPEmail = email;
+        document.getElementById('otp-email-hint').textContent = 'OTP sent to ' + email + '. Check your inbox or spam folder.';
+        document.getElementById('view-otp-email').style.display = 'none';
+        document.getElementById('view-otp-verify').style.display = 'block';
+      }
+    }
+
+    async function handleVerifyOTP() {
+      showError('');
+      var token = document.getElementById('otp-code').value.trim();
+      if (!token || token.length !== 6) { showError('Please enter the 6-digit code.'); return; }
+      setLoading(true);
+      var result = await verifyOTP(currentOTPEmail, token);
+      setLoading(false);
+      if (result.error) {
+        showError(result.error.message || 'Invalid code. Please try again.');
+      } else {
+        window.location.href = 'shop.html';
       }
     }
   </script>

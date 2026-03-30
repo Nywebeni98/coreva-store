@@ -1,4 +1,3 @@
-// Supabase config
 var SUPABASE_URL = 'https://spwylltpedngyigbrcso.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNwd3lsbHRwZWRuZ3lpZ2JyY3NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MjQzNjIsImV4cCI6MjA5MDQwMDM2Mn0.bIvyUtUL62j8v0w57Z5T3lckESCyaYbJfCfkc9WZGuw';
 
@@ -41,11 +40,58 @@ async function signInWithEmail(email, password) {
 async function signUpWithEmail(name, email, password) {
   var client = initSupabase();
   if (!client) return { error: { message: 'Not initialised' } };
-  return await client.auth.signUp({
+  var result = await client.auth.signUp({
     email: email,
     password: password,
     options: { data: { full_name: name } }
   });
+  if (!result.error && result.data && result.data.user) {
+    await saveUserProfile(result.data.user.id, email, name);
+  }
+  return result;
+}
+
+async function sendOTP(email) {
+  var client = initSupabase();
+  if (!client) return { error: { message: 'Not initialised' } };
+  return await client.auth.signInWithOtp({
+    email: email,
+    options: {
+      shouldCreateUser: true,
+      emailRedirectTo: window.location.origin + '/shop.html'
+    }
+  });
+}
+
+async function verifyOTP(email, token) {
+  var client = initSupabase();
+  if (!client) return { error: { message: 'Not initialised' } };
+  var result = await client.auth.verifyOtp({
+    email: email,
+    token: token,
+    type: 'email'
+  });
+  if (!result.error && result.data && result.data.user) {
+    var user = result.data.user;
+    var name = user.user_metadata && user.user_metadata.full_name ? user.user_metadata.full_name : '';
+    await saveUserProfile(user.id, email, name);
+  }
+  return result;
+}
+
+async function saveUserProfile(userId, email, name) {
+  var client = initSupabase();
+  if (!client) return;
+  try {
+    await client.from('user_profiles').upsert({
+      id: userId,
+      email: email,
+      full_name: name || '',
+      created_at: new Date().toISOString()
+    }, { onConflict: 'id' });
+  } catch(e) {
+    console.log('Profile save skipped (table may not exist yet):', e.message);
+  }
 }
 
 async function signOut() {

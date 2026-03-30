@@ -657,3 +657,56 @@ nav a:hover, nav a.active {
   .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .auth-card { padding: 28px 18px; }
 }
+
+/* ─── AUTH TABS ───────────────────────────────────── */
+.auth-tabs {
+  display: flex;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  background: white;
+  color: var(--primary);
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.auth-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.auth-tab:hover:not(.active) {
+  background: #ecf2ff;
+}
+.secondary-btn {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.secondary-btn:hover { background: #ecf2ff; }
+.auth-hint {
+  text-align: center;
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 10px;
+}
+.auth-logo img {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
