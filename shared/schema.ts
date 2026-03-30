@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, decimal } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, decimal, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -52,3 +52,19 @@ export type CartItem = typeof cartItems.$inferSelect;
 export type CartItemWithProduct = CartItem & {
   product: Product;
 };
+
+export const userProfiles = pgTable("user_profiles", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  supabaseId: text("supabase_id").unique(),
+  email: text("email").notNull().unique(),
+  fullName: text("full_name").notNull().default(""),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertUserProfileSchema = createInsertSchema(userProfiles).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertUserProfile = z.infer<typeof insertUserProfileSchema>;
+export type UserProfile = typeof userProfiles.$inferSelect;

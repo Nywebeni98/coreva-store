@@ -80,17 +80,14 @@ async function verifyOTP(email, token) {
 }
 
 async function saveUserProfile(userId, email, name) {
-  var client = initSupabase();
-  if (!client) return;
   try {
-    await client.from('user_profiles').upsert({
-      id: userId,
-      email: email,
-      full_name: name || '',
-      created_at: new Date().toISOString()
-    }, { onConflict: 'id' });
+    await fetch('/api/save-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ supabaseId: userId, email: email, fullName: name || '' })
+    });
   } catch(e) {
-    console.log('Profile save skipped (table may not exist yet):', e.message);
+    console.log('Profile save error:', e.message);
   }
 }
 

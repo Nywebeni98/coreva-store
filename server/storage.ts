@@ -4,6 +4,7 @@ import {
   users,
   products,
   cartItems,
+  userProfiles,
   type User,
   type InsertUser,
   type Product,
@@ -11,23 +12,27 @@ import {
   type CartItem,
   type InsertCartItem,
   type CartItemWithProduct,
+  type UserProfile,
+  type InsertUserProfile,
 } from "@shared/schema";
-import { randomUUID } from "crypto";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
+
   getAllProducts(): Promise<Product[]>;
   getProduct(id: string): Promise<Product | undefined>;
   createProduct(product: InsertProduct): Promise<Product>;
-  
+
   getCartItems(sessionId: string): Promise<CartItemWithProduct[]>;
   addToCart(item: InsertCartItem): Promise<CartItem>;
   updateCartItemQuantity(id: string, quantity: number): Promise<CartItem | undefined>;
   removeCartItem(id: string): Promise<void>;
   clearCart(sessionId: string): Promise<void>;
+
+  upsertUserProfile(profile: InsertUserProfile): Promise<UserProfile>;
+  getAllUserProfiles(): Promise<UserProfile[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -116,6 +121,25 @@ export class DatabaseStorage implements IStorage {
 
   async clearCart(sessionId: string): Promise<void> {
     await db.delete(cartItems).where(eq(cartItems.sessionId, sessionId));
+  }
+
+  async upsertUserProfile(profile: InsertUserProfile): Promise<UserProfile> {
+    const [result] = await db
+      .insert(userProfiles)
+      .values(profile)
+      .onConflictDoUpdate({
+        target: userProfiles.email,
+        set: {
+          fullName: profile.fullName,
+          supabaseId: profile.supabaseId,
+        },
+      })
+      .returning();
+    return result;
+  }
+
+  async getAllUserProfiles(): Promise<UserProfile[]> {
+    return db.select().from(userProfiles).orderBy(userProfiles.createdAt);
   }
 }
 

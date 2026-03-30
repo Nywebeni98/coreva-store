@@ -4,6 +4,12 @@ import { storage } from "./storage";
 import { insertCartItemSchema } from "@shared/schema";
 import { z } from "zod";
 
+const saveProfileSchema = z.object({
+  supabaseId: z.string().optional(),
+  email: z.string().email(),
+  fullName: z.string().optional().default(""),
+});
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -107,6 +113,33 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error clearing cart:", error);
       res.status(500).json({ error: "Failed to clear cart" });
+    }
+  });
+
+  // Save / update user profile (called from auth.js after sign-in)
+  app.post("/api/save-profile", async (req, res) => {
+    try {
+      const data = saveProfileSchema.parse(req.body);
+      const profile = await storage.upsertUserProfile({
+        supabaseId: data.supabaseId || null,
+        email: data.email,
+        fullName: data.fullName || "",
+      });
+      res.json(profile);
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      res.status(500).json({ error: "Failed to save profile" });
+    }
+  });
+
+  // Get all user profiles (for admin overview)
+  app.get("/api/users", async (req, res) => {
+    try {
+      const profiles = await storage.getAllUserProfiles();
+      res.json(profiles);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ error: "Failed to fetch users" });
     }
   });
 
